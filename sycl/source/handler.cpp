@@ -285,6 +285,9 @@ event handler::finalize() {
             if (NewEvent != nullptr)
               NewEvent->setHostEnqueueTime();
             [&](auto... Args) {
+              if (MImpl->MKernelUsesClusterLaunch) {
+                Result = PI_ERROR_UNSUPPORTED_FEATURE;
+              }
               if (MImpl->MKernelIsCooperative) {
                 MQueue->getPlugin()
                     ->call<
@@ -311,7 +314,8 @@ event handler::finalize() {
             Result = enqueueImpKernel(
                 MQueue, MNDRDesc, MArgs, KernelBundleImpPtr, MKernel,
                 MKernelName.c_str(), RawEvents, NewEvent, nullptr,
-                MImpl->MKernelCacheConfig, MImpl->MKernelIsCooperative);
+                MImpl->MKernelCacheConfig, MImpl->MKernelIsCooperative,
+                MImpl->MKernelUsesClusterLaunch);
           }
         }
 #ifdef XPTI_ENABLE_INSTRUMENTATION
@@ -372,7 +376,8 @@ event handler::finalize() {
         std::move(MImpl->MKernelBundle), std::move(CGData), std::move(MArgs),
         MKernelName.c_str(), std::move(MStreamStorage),
         std::move(MImpl->MAuxiliaryResources), MCGType,
-        MImpl->MKernelCacheConfig, MImpl->MKernelIsCooperative, MCodeLoc));
+        MImpl->MKernelCacheConfig, MImpl->MKernelIsCooperative,
+        MImpl->MKernelUsesClusterLaunch, MCodeLoc));
     break;
   }
   case detail::CG::CopyAccToPtr:
@@ -1743,6 +1748,10 @@ void handler::setKernelCacheConfig(
 
 void handler::setKernelIsCooperative(bool KernelIsCooperative) {
   MImpl->MKernelIsCooperative = KernelIsCooperative;
+}
+
+void handler::setKernelUsesClusterLaunch(bool KernelUsesClusterLaunch) {
+  MImpl->MKernelUsesClusterLaunch = KernelUsesClusterLaunch;
 }
 
 void handler::ext_oneapi_graph(
