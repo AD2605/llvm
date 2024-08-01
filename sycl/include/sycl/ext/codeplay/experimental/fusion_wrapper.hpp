@@ -92,7 +92,7 @@ public:
   event complete_fusion(const property_list &propList = {});
 
 private:
-  std::shared_ptr<detail::fusion_wrapper_impl> MImpl;
+  std::shared_ptr<sycl::detail::fusion_wrapper_impl> MImpl;
 };
 } // namespace ext::codeplay::experimental
 } // namespace _V1
