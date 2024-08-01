@@ -1,10 +1,11 @@
 // Tests whether or not cluster launch was successful, with the correct ranges
 // that were passed via parallel for overload
-// REQUIRES: aspect-ext_oneapi_cuda_cluster_group
+// REQUIRES: aspect-ext_codeplay_cuda_cluster_group
 // RUN: %{build} -Xsycl-target-backend --cuda-gpu-arch=sm_90 -o %t.out
 // RUN: %{run} %t.out
 
-#include <sycl/ext/oneapi/experimental/cluster_group_prop.hpp>
+#include <sycl/ext/codeplay/experimental/cluster_group_prop.hpp>
+#include <sycl/ext/oneapi/properties/properties.hpp>
 #include <sycl/queue.hpp>
 #include <sycl/usm.hpp>
 
@@ -15,10 +16,12 @@ int test_cluster_launch_parallel_for(sycl::queue &Queue,
                                      sycl::range<Dim> GlobalRange,
                                      sycl::range<Dim> LocalRange,
                                      sycl::range<Dim> ClusterRange) {
-  using namespace sycl::ext::oneapi::experimental;
 
-  cuda::cluster_size ClusterDims(ClusterRange);
-  properties ClusterLaunchProperty{ClusterDims};
+  namespace sycl_cp = sycl::ext::codeplay::experimental;
+  namespace sycl_ex = sycl::ext::oneapi::experimental;
+
+  sycl_cp::cuda::cluster_size ClusterDims(ClusterRange);
+  sycl_ex::properties ClusterLaunchProperty{ClusterDims};
 
   int *CorrectResultFlag = sycl::malloc_device<int>(1, Queue);
   Queue.memset(CorrectResultFlag, 0, sizeof(int)).wait();

@@ -22,12 +22,12 @@
  *     sycl/test-e2e/ClusterLaunch/cluster_launch_parallel_for.cpp
  **************************************************************************/
 
-// REQUIRES: aspect-ext_oneapi_cuda_cluster_group
+// REQUIRES: aspect-ext_codeplay_cuda_cluster_group
 // RUN: %{build} -Xsycl-target-backend=nvptx64-nvidia-cuda --cuda-gpu-arch=sm_90 -o %t.out
 // RUN: %{run} %t.out
 
 #include <sycl/detail/core.hpp>
-#include <sycl/ext/oneapi/experimental/cluster_group_prop.hpp>
+#include <sycl/ext/codeplay/experimental/cluster_group_prop.hpp>
 #include <sycl/ext/oneapi/properties/properties.hpp>
 
 #include <syclcompat/launch.hpp>
@@ -35,6 +35,7 @@
 
 namespace compat_exp = syclcompat::experimental;
 namespace sycl_exp = sycl::ext::oneapi::experimental;
+namespace sycl_cp = sycl::ext::codeplay::experimental;
 
 template <int Dim>
 void cluster_launch_kernel(sycl::range<Dim> cluster_range,
@@ -72,7 +73,7 @@ int test_cluster_launch_parallel_for(sycl::range<Dim> global_range,
                                      sycl::range<Dim> local_range,
                                      sycl::range<Dim> cluster_range) {
 
-  sycl_exp::cuda::cluster_size cluster_dims(cluster_range);
+  sycl_cp::cuda::cluster_size cluster_dims(cluster_range);
 
   int *correct_result_flag = syclcompat::malloc<int>(1);
   syclcompat::memset(correct_result_flag, 0, sizeof(int));

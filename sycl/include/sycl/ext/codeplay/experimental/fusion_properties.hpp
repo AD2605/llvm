@@ -19,18 +19,22 @@ namespace sycl {
 inline namespace _V1 {
 namespace ext::codeplay::experimental::property {
 
-class promote_private
-    : public detail::DataLessProperty<detail::FusionPromotePrivate> {};
+class promote_private : public sycl::detail::DataLessProperty<
+                            sycl::detail::FusionPromotePrivate> {};
 
 class promote_local
-    : public detail::DataLessProperty<detail::FusionPromoteLocal> {};
+    : public sycl::detail::DataLessProperty<sycl::detail::FusionPromoteLocal> {
+};
 
-class no_barriers : public detail::DataLessProperty<detail::FusionNoBarrier> {};
+class no_barriers
+    : public sycl::detail::DataLessProperty<sycl::detail::FusionNoBarrier> {};
 
-class force_fusion : public detail::DataLessProperty<detail::FusionForce> {};
+class force_fusion
+    : public sycl::detail::DataLessProperty<sycl::detail::FusionForce> {};
 
 namespace queue {
-class enable_fusion : public detail::DataLessProperty<detail::FusionEnable> {};
+class enable_fusion
+    : public sycl::detail::DataLessProperty<sycl::detail::FusionEnable> {};
 } // namespace queue
 
 } // namespace ext::codeplay::experimental::property

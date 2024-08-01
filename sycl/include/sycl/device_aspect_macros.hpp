@@ -365,9 +365,9 @@
 #define __SYCL_ALL_DEVICES_HAVE_ext_oneapi_virtual_mem__ 0
 #endif
 
-#ifndef __SYCL_ALL_DEVICES_HAVE_ext_oneapi_cuda_cluster_group__
-// __SYCL_ASPECT(ext_oneapi_cuda_cluster_group, 75)
-#define __SYCL_ALL_DEVICES_HAVE_ext_oneapi_cuda_cluster_group__ 0
+#ifndef __SYCL_ALL_DEVICES_HAVE_ext_codeplay_cuda_cluster_group__
+// __SYCL_ASPECT(ext_codeplay_cuda_cluster_group, 75)
+#define __SYCL_ALL_DEVICES_HAVE_ext_codeplay_cuda_cluster_group__ 0
 #endif
 
 #ifndef __SYCL_ALL_DEVICES_HAVE_ext_oneapi_image_array__
@@ -745,9 +745,9 @@
 #define __SYCL_ANY_DEVICE_HAS_ext_oneapi_virtual_mem__ 0
 #endif
 
-#ifndef __SYCL_ANY_DEVICE_HAS_ext_oneapi_cuda_cluster_group__
-// __SYCL_ASPECT(ext_oneapi_cuda_cluster_group, 75)
-#define __SYCL_ANY_DEVICE_HAS_ext_oneapi_cuda_cluster_group__ 0
+#ifndef __SYCL_ANY_DEVICE_HAS_ext_codeplay_cuda_cluster_group__
+// __SYCL_ASPECT(ext_codeplay_cuda_cluster_group, 75)
+#define __SYCL_ANY_DEVICE_HAS_ext_codeplay_cuda_cluster_group__ 0
 #endif
 
 #ifndef __SYCL_ANY_DEVICE_HAS_ext_oneapi_image_array__

@@ -21,7 +21,7 @@ fusion_wrapper::fusion_wrapper(queue &Queue) {
         sycl::errc::invalid,
         "Cannot wrap a queue for fusion which doesn't support fusion");
   }
-  MImpl = std::make_shared<detail::fusion_wrapper_impl>(
+  MImpl = std::make_shared<sycl::detail::fusion_wrapper_impl>(
       sycl::detail::getSyclObjImpl(Queue));
 }
 

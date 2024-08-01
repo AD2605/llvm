@@ -24,13 +24,13 @@
 #include <sycl/device.hpp>
 #include <sycl/event.hpp>
 #include <sycl/exception.hpp>
+#include <sycl/ext/codeplay/experimental/cluster_group_prop.hpp>
 #include <sycl/ext/intel/experimental/fp_control_kernel_properties.hpp>
 #include <sycl/ext/intel/experimental/kernel_execution_properties.hpp>
 #include <sycl/ext/oneapi/bindless_images_interop.hpp>
 #include <sycl/ext/oneapi/bindless_images_mem_handle.hpp>
 #include <sycl/ext/oneapi/device_global/device_global.hpp>
 #include <sycl/ext/oneapi/device_global/properties.hpp>
-#include <sycl/ext/oneapi/experimental/cluster_group_prop.hpp>
 #include <sycl/ext/oneapi/experimental/graph.hpp>
 #include <sycl/ext/oneapi/experimental/raw_kernel_arg.hpp>
 #include <sycl/ext/oneapi/experimental/use_root_sync_prop.hpp>
@@ -957,13 +957,13 @@ private:
 
   template <typename Properties>
   void checkAndSetClusterRange(const Properties &Props) {
-    namespace syclex = sycl::ext::oneapi::experimental;
+    namespace syclcp = sycl::ext::codeplay::experimental;
     constexpr std::size_t ClusterDim =
-        syclex::detail::getClusterDim<Properties>();
+        syclcp::detail::getClusterDim<Properties>();
     if constexpr (ClusterDim > 0) {
       auto ClusterSize = Props
                              .template get_property<
-                                 syclex::cuda::cluster_size_key<ClusterDim>>()
+                                 syclcp::cuda::cluster_size_key<ClusterDim>>()
                              .get_cluster_size();
       setKernelClusterLaunch(padRange(ClusterSize), ClusterDim);
     }

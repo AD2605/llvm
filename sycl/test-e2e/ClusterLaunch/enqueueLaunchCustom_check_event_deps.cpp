@@ -1,12 +1,12 @@
 // Checks whether or not event Dependencies are honored by
 // urEnqueueKernelLaunchCustomExp
-// REQUIRES: aspect-ext_oneapi_cuda_cluster_group
+// REQUIRES: aspect-ext_codeplay_cuda_cluster_group
 // RUN: %{build} -Xsycl-target-backend --cuda-gpu-arch=sm_90 -o %t.out
 // RUN: %{run} %t.out
 
 #include <sycl/accessor.hpp>
 #include <sycl/buffer.hpp>
-#include <sycl/ext/oneapi/experimental/cluster_group_prop.hpp>
+#include <sycl/ext/codeplay/experimental/cluster_group_prop.hpp>
 #include <sycl/queue.hpp>
 #include <sycl/usm.hpp>
 
@@ -26,6 +26,9 @@ template <typename T> void dummy_kernel(T *Input, int N, sycl::nd_item<1> It) {
 
 int main() {
 
+  namespace sycl_cp = sycl::ext::codeplay::experimental;
+  namespace sycl_ex = sycl::ext::oneapi::experimental;
+
   std::vector<int> HostArray(4096, -20);
   sycl::queue Queue;
 
@@ -43,8 +46,8 @@ int main() {
     Queue.submit([&](sycl::handler &CGH) {
       using namespace sycl::ext::oneapi::experimental;
 
-      cuda::cluster_size ClusterDims(sycl::range{2});
-      properties ClusterLaunchProperty{ClusterDims};
+      sycl_cp::cuda::cluster_size ClusterDims(sycl::range{2});
+      sycl_ex::properties ClusterLaunchProperty{ClusterDims};
       auto Acc = Buff.template get_access<sycl::access::mode::read_write>(CGH);
       CGH.parallel_for(
           sycl::nd_range({4096}, {32}), ClusterLaunchProperty,
