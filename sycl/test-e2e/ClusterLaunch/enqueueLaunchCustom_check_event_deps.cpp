@@ -32,7 +32,7 @@ int main() {
   std::vector<int> HostArray(4096, -20);
   sycl::queue Queue;
 
-  if (!Queue.get_device().has(sycl::aspect::ext_oneapi_cuda_cluster_group)) {
+  if (!Queue.get_device().has(sycl::aspect::ext_codpelay_cuda_cluster_group)) {
     printf("Cluster group not supported on this arch, exiting...\n");
     return 0;
   }
