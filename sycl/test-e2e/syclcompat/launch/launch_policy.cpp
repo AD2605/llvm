@@ -23,12 +23,13 @@
 // RUN: %{build} -fsycl-device-code-split=per_kernel -o %t.out
 // RUN: %{run} %t.out
 
+#include <sycl/detail/core.hpp>
+#include <sycl/ext/codeplay/experimental/cluster_group_prop.hpp>
 #include <sycl/ext/intel/experimental/kernel_execution_properties.hpp>
 #include <sycl/ext/oneapi/kernel_properties/properties.hpp>
-#include <syclcompat/device.hpp>
-#include <sycl/detail/core.hpp>
 #include <sycl/ext/oneapi/properties/properties.hpp>
 #include <sycl/group_barrier.hpp>
+#include <syclcompat/device.hpp>
 
 #include <syclcompat/launch.hpp>
 #include <syclcompat/memory.hpp>
@@ -39,6 +40,7 @@
 namespace compat_exp = syclcompat::experimental;
 namespace sycl_exp = sycl::ext::oneapi::experimental;
 namespace sycl_intel_exp = sycl::ext::intel::experimental;
+namespace sycl_cp = sycl::ext::codeplay : experimental;
 
 // Dummy kernel functions for testing
 // =======================================================================
@@ -151,7 +153,7 @@ int test_variadic_config_ctor() {
   // nd_range and launch_properties properties ctor
   {
 
-    sycl_exp::cuda::cluster_size<1> ClusterDims(sycl::range<1>{32});
+    sycl_cp::cuda::cluster_size<1> ClusterDims(sycl::range<1>{32});
     sycl_exp::properties my_props{ClusterDims};
 
     compat_exp::launch_policy my_config(
@@ -162,7 +164,7 @@ int test_variadic_config_ctor() {
                        compat_exp::launch_policy<
                            sycl::nd_range<1>, empty_properties_t,
                            decltype(sycl::ext::oneapi::experimental::properties{
-                               sycl_exp::cuda::cluster_size<1>{32}}),
+                               sycl_cp::cuda::cluster_size<1>{32}}),
                            false>>);
   }
 

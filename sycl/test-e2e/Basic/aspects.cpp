@@ -84,7 +84,7 @@ int main() {
     if (plt.has(aspect::usm_system_allocations)) {
       std::cout << "  USM system allocations" << std::endl;
     }
-    if (plt.has(aspect::ext_oneapi_codeplay_cluster_group)) {
+    if (plt.has(aspect::ext_codeplay_cuda_cluster_group)) {
       std::cout << " ext_codeplay_codeplay_cluster_group" << std::endl;
     }
   }
